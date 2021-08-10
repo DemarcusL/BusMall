@@ -20,8 +20,7 @@ class ImageObject {
     timesDisplayed = 0;
     // initial constructor method, all MUST HAVE THIS NAMED constructor
     // add params we are using for the object props
-    constructor(name, imageSrc)
-    {
+    constructor(name, imageSrc) {
         this.name = name;
         this.imageSrc = imageSrc;
 
@@ -47,21 +46,21 @@ let allImageObjects = [
     // this makes a new object instnce
     // on the left, over the image we wnt, and use 'Copy Path' to get the path location for the img
     new ImageObject('Noodle Fan', './BusMall/Images/noodle_fan.jpg'),
-    new ImageObject('Pen Tops', ' ./BusMall/Images/pen_tops.jpg '),
+    new ImageObject('Pen Tops', './BusMall/Images/pen_tops.jpg '),
     new ImageObject('Toothpaste Roller', './BusMall/Images/toothpaste_rollup.jpg'),
-    new ImageObject('Lego Shoes', ' ./BusMall/Images/lego_shoes.jpg '),
-    new ImageObject('Noodle Slip', ' ./BusMall/Images/noodle_slip.jpg '),
-    new ImageObject('Speaker Shoes', ' ./BusMall/Images/shoes_music.jpg '),
-    new ImageObject('Sleep Hood', ' ./BusMall/Images/sleep_hood.jfif '),
-    new ImageObject('Air Pod Chop Sticks', ' ./BusMall/Images/airpod_sticks.jpg '),
-    new ImageObject('Standing Bike', ' ./BusMall/Images/bike_stand.jpg '),
+    new ImageObject('Lego Shoes', './BusMall/Images/lego_shoes.jpg '),
+    new ImageObject('Noodle Slip', './BusMall/Images/noodle_slip.jpg '),
+    new ImageObject('Speaker Shoes', './BusMall/Images/shoes_music.jpg '),
+    new ImageObject('Sleep Hood', './BusMall/Images/sleep_hood.jfif '),
+    new ImageObject('Air Pod Chop Sticks', './BusMall/Images/airpod_sticks.jpg '),
+    new ImageObject('Standing Bike', './BusMall/Images/bike_stand.jpg '),
 
 ];
 
 // test array of goats for sanity
 // for (let index = 0; index < allImageObjects.length; index++) {
 //     console.log(allImageObjects[index].name);
-    
+
 // }; 
 
 // we need to generate randomly. he mestioned how it reeally does matter, we can get the random step earlier.
@@ -73,22 +72,22 @@ let PictureAreaL = document.getElementById('PictureAreaL');
 let AllImagesSection = document.getElementById('AllImagesSection');
 let PictureAreaM = document.getElementById('PictureAreaM');
 let PictureAreaR = document.getElementById('PictureAreaR');
-//times picked base
-let TimesPicked = document.getElementById('TimesPicked');
 //  set images bases
-let ImageLeft = document.getElementById('ImageLeft');
-let ImageLeftTag = document.getElementById('ImageLeftTag')
-let ImageMid = document.getElementById('ImageMid');
-let ImageMidTag = document.getElementById('ImageMidTag')
-let ImageRight = document.getElementById('ImageRight');
-let ImageRightTag = document.getElementById('ImageRightTag')
+let imageLeft = document.getElementById('imageLeft');
+let imageLeftTag = document.getElementById('imageLeftTag')
+let imageMid = document.getElementById('imageMid');
+let imageMidTag = document.getElementById('imageMidTag')
+let imageRight = document.getElementById('imageRight');
+let imageRightTag = document.getElementById('imageRightTag')
 //     or
 // const PictureArea1
+//times picked base
+let TimesPicked = document.getElementById('TimesPicked');
 
 // requirements says dont display the same image back to back
 // implement a func to pick a random item object
 // look up new ways to write invisble function, anon functions
-let pickedNewItem =  function() {
+let pickedNewItem = function () {
     leftImageIndex = Math.floor(Math.random() * allImageObjects.length);
 
     midImageIndex = Math.floor(Math.random() * allImageObjects.length);
@@ -97,21 +96,21 @@ let pickedNewItem =  function() {
 
     // we are updating the left image
     // rememeber to change goat code with your own code
-    ImageLeft.innerText = allImageObjects[leftImageIndex].name;
+    imageLeft.innerText = allImageObjects[leftImageIndex].name;
     // here we are generating ?
-    ImageLeftTag.src = allImageObjects[leftImageIndex].imageSrc;
+    imageLeftTag.src = allImageObjects[leftImageIndex].imageSrc;
 
     // we are updating the mid image
     // rememeber to change goat code with your own code
-    ImageMid.innerText = allImageObjects[midImageIndex].name;
+    imageMid.innerText = allImageObjects[midImageIndex].name;
     // here we are generating ?
-    ImageMidTag.src = allImageObjects[midImageIndex].imageSrc;
+    imageMidTag.src = allImageObjects[midImageIndex].imageSrc;
 
     // we are updating the right image
     // rememeber to change goat code with your own code
-    ImageRight.innerText = allImageObjects[rightImageIndex].name;
+    imageRight.innerText = allImageObjects[rightImageIndex].name;
     // here we are generating ?
-    ImageRightTag.src = allImageObjects[rightImageIndex].imageSrc;
+    imageRightTag.src = allImageObjects[rightImageIndex].imageSrc;
 
     // update to the display
     leftImageOnThePage = allImageObjects[leftImageIndex];
@@ -135,11 +134,38 @@ let clickEventOnImage = function (evt) {
         midImageOnThePage.timesDisplayed++
         rightImageOnThePage.timesDisplayed++
 
-        console.log(` `);
+        console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Left ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Left ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
+
+        // lets set up an if conditional to check which was claicked and update our results
+        if (id === 'leftImage' || id === 'midImage' || id === 'rightImage') {
+            // Chechk which image was clicked and add it to clicked value
+            if (id === 'leftImage' ) {
+                leftImageOnThePage.clicks++;
+                //sanity
+                console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} Right Now ! `);
+            };
+
+            if (id === 'midImage' ) {
+                midImageOnThePage.clicks++;
+                console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} Right Now ! `);
+            };
+
+            if (id === 'rightImage' ) {
+                rightImageOnThePage.clicks++;
+                console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} Right Now ! `);
+            };
+
+            // now I want new images generated after a selection is met
+            pickedNewItem();
+        };
 
 
-    }
+    };
 
+    // increase clicks total
+    totalClicks++;
+
+    // now set the when they reach max clicks
 
 
 
