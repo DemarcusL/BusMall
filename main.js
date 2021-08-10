@@ -36,7 +36,7 @@ let leftImageOnThePage = null;
 let midImageOnThePage = null;
 let rightImageOnThePage = null;
 let totalClicks = 0;
-const MAX_CLICKS_ALLOWED = 5;
+let maxClicksAllowed = 5;
 
 // We want to randomly pick from a list of  image objects and display them
 // we will need an array for our list of imges, we can and display them
@@ -69,7 +69,7 @@ let allImageObjects = [
 // we are setting our base variables here to reuse
 // we may not need the imag tags, but its works so find a way to refactor, and rememebr, this has a lot of kevins code, go thru and refactor to your own in refefrence to goats
 let PictureAreaL = document.getElementById('PictureAreaL');
-let AllImagesSection = document.getElementById('AllImagesSection');
+let allImagesSection = document.getElementById('allImagesSection');
 let PictureAreaM = document.getElementById('PictureAreaM');
 let PictureAreaR = document.getElementById('PictureAreaR');
 //  set images bases
@@ -82,7 +82,7 @@ let imageRightTag = document.getElementById('imageRightTag')
 //     or
 // const PictureArea1
 //times picked base
-let TimesPicked = document.getElementById('TimesPicked');
+let timesPicked = document.getElementById('timesPicked');
 
 // requirements says dont display the same image back to back
 // implement a func to pick a random item object
@@ -94,6 +94,7 @@ let pickedNewItem = function () {
 
     rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
 
+    // how can I solve this same image displying twice
     // we are updating the left image
     // rememeber to change goat code with your own code
     imageLeft.innerText = allImageObjects[leftImageIndex].name;
@@ -124,7 +125,7 @@ let clickEventOnImage = function (evt) {
     console.log(`You have clicked this element ${evt.target.id}`);
 
     // let set an if for when they click
-    if (totalClicks < MAX_CLICKS_ALLOWED) {
+    if (totalClicks < maxClicksAllowed) {
         // create some variables
         let ImageClickedOn = evt.target;
         let id = ImageClickedOn.id;
@@ -134,23 +135,23 @@ let clickEventOnImage = function (evt) {
         midImageOnThePage.timesDisplayed++
         rightImageOnThePage.timesDisplayed++
 
-        console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Left ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Left ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
+        console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Mid ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Right ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
 
         // lets set up an if conditional to check which was claicked and update our results
         if (id === 'leftImage' || id === 'midImage' || id === 'rightImage') {
             // Chechk which image was clicked and add it to clicked value
-            if (id === 'leftImage' ) {
+            if (id === 'leftImage') {
                 leftImageOnThePage.clicks++;
                 //sanity
                 console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} Right Now ! `);
             };
 
-            if (id === 'midImage' ) {
+            if (id === 'midImage') {
                 midImageOnThePage.clicks++;
                 console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} Right Now ! `);
             };
 
-            if (id === 'rightImage' ) {
+            if (id === 'rightImage') {
                 rightImageOnThePage.clicks++;
                 console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} Right Now ! `);
             };
@@ -165,14 +166,29 @@ let clickEventOnImage = function (evt) {
     // increase clicks total
     totalClicks++;
 
-    // now set the when they reach max clicks
+    // now set the when they reach max clicks, we are removing the click event 
+    if (totalClicks === maxClicksAllowed) {
+        allImagesSection.removeEventListener('click', clickEventOnImage);
+        console.log('You picked 5 Images, Congrats!');
+        alert('You picked 5 Images, Congrats!');
 
+        // Now display the final results
+        for (let index = 0; index < allImageObjects.length; index++) {
+            // find a way to refactor into one line
+            let newScore = document.createElement('ol');
+            newScore.innerText = ` ${allImageObjects[index].name}: ${allImageObjects[index].clicks} `;
+            // this will add the new child element to our html score section
+            timesPicked.appendChild(newScore);
+        };
+
+
+    };
 
 
 };
 
 // Lets add event listeneres to the clicks of the items
 // refer to kevin's code about the even listener, rememeber the bubble effect
-AllImagesSection.addEventListener('click', clickEventOnImage);
+allImagesSection.addEventListener('click', clickEventOnImage);
 
 pickedNewItem(); // there are no images loaded to try yet, check with images, make sure to change the css of pic sizes
