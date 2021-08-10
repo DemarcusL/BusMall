@@ -33,9 +33,11 @@ class ImageObject {
 
 // Add variables we need in multiple places
 // set to an epmty wariable essentilly, and push into here
+
 let leftImageOnThePage = null;
 let midImageOnThePage = null;
 let rightImageOnThePage = null;
+
 let totalClicks = 0;
 // we want this value to be the stopping point
 let maxClicksAllowed = 5;
@@ -52,9 +54,11 @@ let allImageObjects = [
     // this makes a new object instnce
     // on the left, over the image we wnt, and use 'Copy Path' to get the path location for the img
     // check source error
-    new ImageObject('Noodle Fan', './Images/noodle_fan.jpg'),
-    // new ImageObject('Noodle Fan', 'BusMall\Images\noodle_fan.jpg'),
+    new ImageObject('Noodle Fan','./Images/noodle_fan.jpg'),
+
+    // Mr.Madan helped me fix my sourcing error, take ./Busmall off
     // new ImageObject('Pen Tops', './BusMall/Images/pen_tops.jpg '),
+
     new ImageObject('Pen Tops', './Images/pen_tops.jpg '),
     new ImageObject('Toothpaste Roller', './Images/toothpaste_rollup.jpg'),
     new ImageObject('Lego Shoes', './Images/lego_shoes.jpg '),
@@ -143,12 +147,12 @@ let pickedNewItem = function () {
     // update to the display
     leftImageOnThePage = allImageObjects[leftImageIndex];
     midImageOnThePage = allImageObjects[midImageIndex];
-    rightImageIndex = allImageObjects[rightImageIndex];
+    rightImageOnThePage = allImageObjects[rightImageIndex];
 
 };
 
 //==============Dups===============//
-// Lizzy used a  if and conditional statement leftImageIndex === leftImageIndex in a while loop in her initial random photo genertor so if the it ever matched it would can, brandon mention he used a while loop in the constional to while it is unique, it will generate.
+// Lizzy used a  if and conditional statement leftImageIndex === leftImageIndex in a while loop in her initial random photo genertor so if the it ever matched it would cancel, brandon mention he used a while loop in the constional to while it is unique, it will generate.
 // Ask lizzy about this approach, 
 
 
@@ -166,17 +170,18 @@ let clickEventOnImage = function (evt) {
         let id = ImageClickedOn.id;
 
         // Mark shown times, by iterating it thru the empty variable we set in top, we push these in 
-        leftImageOnThePage.timesDisplayed++;
+        // leftImageOnThePage.timesDisplayed++;
         midImageOnThePage.timesDisplayed++;
         rightImageOnThePage.timesDisplayed++;
 
-        console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Mid ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Right ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
+        // console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Mid ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Right ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
 
         // lets set up an if conditional to check which was claicked and update our results
         if (id === 'leftImage' || id === 'midImage' || id === 'rightImage') {
             // Chechk which image was clicked and add it to clicked value
             if (id === 'leftImage') {
                 leftImageOnThePage.clicks++;
+                leftImageOnThePage.timesDisplayed++;
 
                 // check to see if this is moving properly
                 // i think we need to add our new arrays fulfillment used at beginning
@@ -235,6 +240,11 @@ let clickEventOnImage = function (evt) {
 // Lets add event listeneres to the clicks of the items
 // refer to kevin's code about the even listener, rememeber the bubble effect
 allImagesSection.addEventListener('click', clickEventOnImage);
+
+// thinking to attach the listner to specifically my L,M,R areas
+// PictureAreaL.addEventListener('click', clickEventOnImage);
+// PictureAreaM.addEventListener('click', clickEventOnImage);
+// PictureAreaR.addEventListener('click', clickEventOnImage);
 
 
 
