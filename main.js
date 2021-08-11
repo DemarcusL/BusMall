@@ -44,8 +44,8 @@ let maxClicksAllowed = 12;
 
 // we are setting these for getting these datas to our chart, we need to fill them
 let objectNamesArray = [];
-
 let objectClickedArray = [];
+let objectTimesDisplayed = [];
 
 // We want to randomly pick from a list of  image objects and display them
 // we will need an array for our list of imges, we can and display them
@@ -116,18 +116,18 @@ let pickedNewItem = function () {
     // a while checks for a condition as well as a loop, thats why it is unqiuq
 
     // So this is checking for if the left img meets the right image or mid img, the left will loop
-    while ( leftImageIndex === rightImageIndex || leftImageIndex === midImageIndex ) {
+    while (leftImageIndex === rightImageIndex || leftImageIndex === midImageIndex) {
         leftImageIndex = Math.floor(Math.random() * allImageObjects.length);
         console.log(`New Image displayed in ${leftImageOnThePage}`);
     };
 
     //so this is checking the right to mid and left, if they match, it loops
-    while ( rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex ) {
+    while (rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex) {
         rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
     };
 
     //so this is checking the mid against both, if it matches either, it loops the image
-    while ( midImageIndex === leftImageIndex || midImageIndex === rightImageIndex ) {
+    while (midImageIndex === leftImageIndex || midImageIndex === rightImageIndex) {
         midImageIndex = Math.floor(Math.random() * allImageObjects.length);
     };
 
@@ -186,7 +186,7 @@ let clickEventOnImage = function (evt) {
         // console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Mid ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Right ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
 
         // lets set up an if conditional to check which was claicked and update our results
-        
+
         // Sanity Check
         // console.log(`Print the id value of ${id}`)
 
@@ -214,7 +214,7 @@ let clickEventOnImage = function (evt) {
             if (id === 'imageRightTag') {
                 rightImageOnThePage.clicks++;
                 console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} Right Now ! `);
-            } 
+            }
             console.log(' ')
             // now I want new images generated after a selection is met
             pickedNewItem();
@@ -239,7 +239,11 @@ let clickEventOnImage = function (evt) {
         // we want it to iterate thru the all objects array
         for (let index = 0; index < allImageObjects.length; index++) {
             // find a way to refactor into one line
+            // this is making a new score 
+
+
             let newScore = document.createElement('li');
+
             // this is the data going into the chart
             newScore.innerText = ` ${allImageObjects[index].name}: ${allImageObjects[index].clicks} `;
             // this will add the new child element to our html score section
@@ -258,7 +262,7 @@ let clickEventOnImage = function (evt) {
             // Sanity Check
             // console.log(newScore);
         };
-        
+
         // I believe this will push my new score into my empty array for scores on the chart
         objectNamesArray.push(allImageObjects.name);
         console.log(objectNamesArray);
@@ -268,15 +272,58 @@ let clickEventOnImage = function (evt) {
 
 };
 
+// Lizzy had used another function get the results and right before her reslts are displayed she did something
+// function () {
+
+
+// };
+
 // Lets add event listeneres to the clicks of the items
 // refer to kevin's code about the even listener, rememeber the bubble effect
 allImagesSection.addEventListener('click', clickEventOnImage);
 
-// thinking to attach the listner to specifically my L,M,R areas
-// PictureAreaL.addEventListener('click', clickEventOnImage);
-// PictureAreaM.addEventListener('click', clickEventOnImage);
-// PictureAreaR.addEventListener('click', clickEventOnImage);
+//=============================== Chart Making ============================//
+
+// my data is just being making with li, fix that
+// function makeChart()
 
 
+// I need to get the names from the array I made
+const x_axis = objectNamesArray;
+
+// Set up the data sets
+const data = {
+    labels: objectNamesArray,
+    datasets: [{
+        label: 'Times Picked',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [timesPicked], // we will be dropping an array here of clicks that we may need to set
+    }
+// ,// dont forget the comma 
+//this is going to be the second bar for times displayed
+//     {
+//         label: 'Times Picked',
+//         backgroundColor: 'rgb(255, 99, 132)',
+//         borderColor: 'rgb(255, 99, 132)',
+// data: [timesPicked], // we will be dropping an array here of clicks that we may need to set}
+]
+
+};
+
+// defiine your data with what you are using
+const config = {
+    type: 'bar',
+    data,
+    options: {}
+}
+
+// call the chart being ma
+let myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+);
+
+//=============================== End of Chart Making ============================//
 
 pickedNewItem(); // there are no images loaded to try yet, check with images, make sure to change the css of pic sizes
