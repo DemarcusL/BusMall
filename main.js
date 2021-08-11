@@ -175,7 +175,7 @@ let clickEventOnImage = function (evt) {
 
     // let set an if for when they click
     if (totalClicks < maxClicksAllowed) {
-        console.log(` You have clicked ${totalClicks} times`);
+        // console.log(` You have clicked ${totalClicks} times`);
         // create some variables
         // we may need to check her for errors
         // let ImageClickedOn = evt.target.id;
@@ -184,8 +184,11 @@ let clickEventOnImage = function (evt) {
 
         // Mark shown times, by iterating it thru the empty variable we set in top, we push these in 
         leftImageOnThePage.timesDisplayed++;
+        console.log(` ${leftImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
         midImageOnThePage.timesDisplayed++;
+        console.log(` ${midImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
         rightImageOnThePage.timesDisplayed++;
+        console.log(` ${rightImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
 
         // console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Mid ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Right ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
 
@@ -197,6 +200,7 @@ let clickEventOnImage = function (evt) {
         if (id === 'imageLeftTag' || id === 'imageMidTag' || id === 'imageRightTag') {
             // Chechk which image was clicked and add it to clicked value
             if (id === 'imageLeftTag') {
+                // this is 
                 leftImageOnThePage.clicks++;
 
                 // this didnt work
