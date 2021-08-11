@@ -44,10 +44,22 @@ let totalClicks = 0;
 let maxClicksAllowed = 12;
 
 // we are setting these for getting these datas to our chart, we need to fill them
-let objectNamesArray = [];
-// may not be using this
+let allObjectNamesChart = [];
+// let objectNamesArray = [];
+let objectNamesArrayLeft = [];
+let objectNamesArrayMid = [];
+let objectNamesArrayRight = [];
+
+// may not be using these, just making them
+// let objectClickedTotalArray = [];
 let objectClickedArrayLeft = [];
-let objectTimesDisplayed = [];
+let objectClickedArrayMid = [];
+let objectClickedArrayRight = [];
+
+// let objectTimesDisplayedChart = [];
+let objectTimesDisplayedLeft = [];
+let objectTimesDisplayedMid = [];
+let objectTimesDisplayedRight = [];
 
 // We want to randomly pick from a list of  image objects and display them
 // we will need an array for our list of imges, we can and display them
@@ -120,19 +132,19 @@ let pickedNewItem = function () {
     // So this is checking for if the left img meets the right image or mid img, the left will loop
     while (leftImageIndex === rightImageIndex || leftImageIndex === midImageIndex) {
         leftImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log(`New Image displayed in ${leftImageOnThePage}`);
+        console.log("Dupe detected in Left area, New Image displayed in LEFT there");
     };
 
     //so this is checking the right to mid and left, if they match, it loops
     while (rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex) {
         rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log(`New Image displayed in ${midImageOnThePage}`);
+        console.log("Dupe detected in Mid area, New Image displayed there");
     };
 
     //so this is checking the mid against both, if it matches either, it loops the image
     while (midImageIndex === leftImageIndex || midImageIndex === rightImageIndex) {
         midImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log(`New Image displayed in ${rightImageOnThePage}`);
+        console.log("Dupe detected in Right area, New Image displayed in there");
     };
 
     // how can I solve this same image displying twice
@@ -185,8 +197,10 @@ let clickEventOnImage = function (evt) {
         // Mark shown times, by iterating it thru the empty variable we set in top, we push these in 
         leftImageOnThePage.timesDisplayed++;
         console.log(` ${leftImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
+
         midImageOnThePage.timesDisplayed++;
         console.log(` ${midImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
+
         rightImageOnThePage.timesDisplayed++;
         console.log(` ${rightImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
 
@@ -199,6 +213,12 @@ let clickEventOnImage = function (evt) {
 
         if (id === 'imageLeftTag' || id === 'imageMidTag' || id === 'imageRightTag') {
             // Chechk which image was clicked and add it to clicked value
+
+            // I want the names pushed if either one of these are triggered
+            // if (id === 'imageLeftTag' || id === 'imageMidTag' || id === 'imageRightTag' ) {
+            //  objectNamesArray.push(leftImageOnThePage.name);
+            // }
+
             if (id === 'imageLeftTag') {
                 // this is 
                 leftImageOnThePage.clicks++;
@@ -211,19 +231,35 @@ let clickEventOnImage = function (evt) {
                 // objectClickedArray.push(leftImageOnThePage);
 
                 //sanity
-                console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} Right Now ! `);
+                objectNamesArrayLeft.push(leftImageOnThePage.name);
+                // I want my click results pushed in my left clicked array
+                objectClickedArrayLeft.push(leftImageOnThePage.clicks);
+                objectTimesDisplayedLeft.push(leftImageOnThePage.timesDisplayed);
+                console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} clicks Right Now ! `);
             }
 
             if (id === 'imageMidTag') {
                 midImageOnThePage.clicks++;
-                console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} Right Now ! `);
+
+                objectNamesArrayMid.push(midImageOnThePage.name);
+                // I want my click results pushed in my left clicked array
+                objectClickedArrayMid.push(midImageOnThePage.clicks);
+                objectTimesDisplayedMid.push(midImageOnThePage.timesDisplayed);
+
+                console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} clicks Right Now ! `);
             }
 
             if (id === 'imageRightTag') {
                 rightImageOnThePage.clicks++;
-                console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} Right Now ! `);
+
+                objectNamesArrayRight.push(leftImageOnThePage.name);
+                // I want my click results pushed in my left clicked array
+                objectClickedArrayRight.push(leftImageOnThePage.clicks);
+                objectTimesDisplayedRight.push(leftImageOnThePage.timesDisplayed);
+
+                console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} clicks Right Now ! `);
             }
-            console.log(' ')
+        
             // now I want new images generated after a selection is met
             pickedNewItem();
         }
@@ -258,26 +294,24 @@ let clickEventOnImage = function (evt) {
             // this will add the new child element to our html score section
             timesPicked.appendChild(newScore);
             //========  This is making the li elements in my dom ====== //
-
-
-            // i want after my clicks to display the name of all imgs 
-            // objectNamesArray.push(allImageObjects.name);
-            // console.log(objectNamesArray);
+;
 
             
             // Sanity Check
             // console.log(newScore);
         };
 
-        //let create a for loop for the clicks only
-        for (let index = 0; index < allImageObjects.length; index++) {
-            // this only pushes the li into the new array, we want the times clicked
-            objectClickedArrayLeft.push(leftImageOnThePage.clicks);
-            console.log(objectClickedArrayLeft.clicks);
-            // let scoreStored = allImageObjects[index].clicks;
-            // console.log(objectClickedArray);
+        // console.log(` The ${leftImageOnThePage.name} was displayed ${leftImageOnThePage.timesDisplayed}`);
 
-        };
+        //let create a for loop for the clicks only
+        // for (let index = 0; index < allImageObjects.length; index++) {
+        //     // this only pushes the li into the new array, we want the times clicked
+        //     objectClickedArrayLeft.push(leftImageOnThePage.clicks);
+        //     console.log(objectClickedArrayLeft.clicks);
+        //     // let scoreStored = allImageObjects[index].clicks;
+        //     // console.log(objectClickedArray);
+
+        // };
 
         // for (let index = 0; index < .length; index++) {
         //     // i want after my clicks to display the name of all imgs 
@@ -290,7 +324,17 @@ let clickEventOnImage = function (evt) {
         // I believe this will push my new score into my empty array for scores on the chart
 
         // objectNamesArray.push(allImageObjects.name);
-        // console.log(objectNamesArray);
+        console.log(objectNamesArrayLeft);
+        console.log(objectNamesArrayMid);
+        console.log(objectNamesArrayRight);
+
+        console.log(objectClickedArrayLeft);
+        console.log(objectClickedArrayMid);
+        console.log(objectClickedArrayRight);
+
+        console.log(objectTimesDisplayedLeft);
+        console.log(objectTimesDisplayedMid);
+        console.log(objectTimesDisplayedRight);
 
     };
 
