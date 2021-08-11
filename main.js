@@ -12,6 +12,7 @@
 //Define base set of props for our domin object in a new ES6 class syntax
 // inside curly brces mens it is ecapsulated in the clss
 // GoatPictures will be watever clss we choose here
+//===================================== Lab 11 , Getting Started =========================//
 class ImageObject {
 
     // Propersties I want but not passed in
@@ -234,38 +235,44 @@ let clickEventOnImage = function (evt) {
 
         // kev recommends a function to iterate thru allimage objects, make 2 new arrays, and load up a name array and 
 
+        // let scoreStored = 
         // function postR
         // Now display the final results
         // we want it to iterate thru the all objects array
         for (let index = 0; index < allImageObjects.length; index++) {
+
+            //========== This is making the li elements in my dom ==========//
             // find a way to refactor into one line
             // this is making a new score 
-
-
             let newScore = document.createElement('li');
 
             // this is the data going into the chart
             newScore.innerText = ` ${allImageObjects[index].name}: ${allImageObjects[index].clicks} `;
             // this will add the new child element to our html score section
             timesPicked.appendChild(newScore);
+            //========  This is making the li elements in my dom ====== //
+
 
             // this only pushes the li into the new array, we want the times clicked
             // objectClickedArray.push(allImageObjects[index].clicks);
             // console.log(objectClickedArray);
+            // let scoreStored = allImageObjects[index].clicks;
 
             // i want after my clicks to display the name of all imgs 
-            objectNamesArray.push(allImageObjects[index].name);
+            objectNamesArray.push(allImageObjects.name);
             console.log(objectNamesArray);
 
-            // return(newScore);
+            // instead of making lis right now, lets get the names into this new variable, cause as it stands my objectnames array only reads as li
+
 
             // Sanity Check
             // console.log(newScore);
         };
 
         // I believe this will push my new score into my empty array for scores on the chart
-        objectNamesArray.push(allImageObjects.name);
-        console.log(objectNamesArray);
+
+        // objectNamesArray.push(allImageObjects.name);
+        // console.log(objectNamesArray);
 
     };
 
@@ -282,47 +289,47 @@ let clickEventOnImage = function (evt) {
 // refer to kevin's code about the even listener, rememeber the bubble effect
 allImagesSection.addEventListener('click', clickEventOnImage);
 
-//=============================== Chart Making ============================//
+//=============================== Lab 12 Chart Making ============================//
 
 // my data is just being making with li, fix that
 // function makeChart()
 
 
 // I need to get the names from the array I made
-const x_axis = objectNamesArray;
+// const x_axis = objectNamesArray;
 
-// Set up the data sets
-const data = {
-    labels: objectNamesArray,
-    datasets: [{
-        label: 'Times Picked',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [timesPicked], // we will be dropping an array here of clicks that we may need to set
-    }
-// ,// dont forget the comma 
-//this is going to be the second bar for times displayed
-//     {
+// // Set up the data sets
+// const data = {
+//     labels: objectNamesArray,
+//     datasets: [{
 //         label: 'Times Picked',
 //         backgroundColor: 'rgb(255, 99, 132)',
 //         borderColor: 'rgb(255, 99, 132)',
-// data: [timesPicked], // we will be dropping an array here of clicks that we may need to set}
-]
+//         data: [timesPicked], // we will be dropping an array here of clicks that we may need to set
+//     }
+// // ,// dont forget the comma 
+// //this is going to be the second bar for times displayed
+// //     {
+// //         label: 'Times Picked',
+// //         backgroundColor: 'rgb(255, 99, 132)',
+// //         borderColor: 'rgb(255, 99, 132)',
+// // data: [timesPicked], // we will be dropping an array here of clicks that we may need to set}
+// ]
 
-};
+// };
 
-// defiine your data with what you are using
-const config = {
-    type: 'bar',
-    data,
-    options: {}
-}
+// // defiine your data with what you are using
+// const config = {
+//     type: 'bar',
+//     data,
+//     options: {}
+// }
 
-// call the chart being ma
-let myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-);
+// // call the chart being ma
+// let myChart = new Chart(
+//     document.getElementById('myChart'),
+//     config
+// );
 
 //=============================== End of Chart Making ============================//
 
