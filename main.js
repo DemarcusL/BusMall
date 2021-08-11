@@ -45,6 +45,7 @@ let maxClicksAllowed = 12;
 
 // we are setting these for getting these datas to our chart, we need to fill them
 let objectNamesArray = [];
+// may not be using this
 let objectClickedArray = [];
 let objectTimesDisplayed = [];
 
@@ -253,20 +254,25 @@ let clickEventOnImage = function (evt) {
             //========  This is making the li elements in my dom ====== //
 
 
-            // this only pushes the li into the new array, we want the times clicked
-            // objectClickedArray.push(allImageObjects[index].clicks);
-            // console.log(objectClickedArray);
-            // let scoreStored = allImageObjects[index].clicks;
-
             // i want after my clicks to display the name of all imgs 
-            objectNamesArray.push(allImageObjects.name);
-            console.log(objectNamesArray);
+            // objectNamesArray.push(allImageObjects.name);
+            // console.log(objectNamesArray);
 
             // instead of making lis right now, lets get the names into this new variable, cause as it stands my objectnames array only reads as li
 
 
             // Sanity Check
             // console.log(newScore);
+        };
+
+        //let create a for loop for the clicks only
+        for (let index = 0; index < allImageObjects.length; index++) {
+            // this only pushes the li into the new array, we want the times clicked
+            objectClickedArray.push(allImageObjects[index].clicks);
+            console.log(objectClickedArray);
+            // let scoreStored = allImageObjects[index].clicks;
+            // console.log(objectClickedArray);
+
         };
 
         // I believe this will push my new score into my empty array for scores on the chart
