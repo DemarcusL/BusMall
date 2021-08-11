@@ -44,6 +44,7 @@ let maxClicksAllowed = 12;
 
 // we are setting these for getting these datas to our chart, we need to fill them
 let objectNamesArray = [];
+
 let objectClickedArray = [];
 
 // We want to randomly pick from a list of  image objects and display them
@@ -97,6 +98,8 @@ let imageRightTag = document.getElementById('imageRightTag')
 //times picked base
 let timesPicked = document.getElementById('timesPicked');
 
+
+
 // requirements says dont display the same image back to back
 // implement a func to pick a random item object
 // look up new ways to write invisble function, anon functions
@@ -111,19 +114,22 @@ let pickedNewItem = function () {
     //set up a call back function
     // this will keep the things unique in a while conditional, ask lizzy about this approach
     // a while checks for a condition as well as a loop, thats why it is unqiuq
-    // while (leftImageIndex === leftImageIndex ) {
-        
-    // };
 
-    // //set up a call back function
-    // while (midImageIndex === midImageIndex ) {
-    //     midImageIndex = Math.floor(Math.random() * allImageObjects.length);
-    // };
+    // So this is checking for if the left img meets the right image or mid img, the left will loop
+    while ( leftImageIndex === rightImageIndex || leftImageIndex === midImageIndex ) {
+        leftImageIndex = Math.floor(Math.random() * allImageObjects.length);
+        console.log(`New Image displayed in ${leftImageOnThePage}`);
+    };
 
-    // //set up a call back function
-    // while (rightImageIndex === rightImageIndex ) {
-    //     rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
-    // };
+    //so this is checking the right to mid and left, if they match, it loops
+    while ( rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex ) {
+        rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
+    };
+
+    //so this is checking the mid against both, if it matches either, it loops the image
+    while ( midImageIndex === leftImageIndex || midImageIndex === rightImageIndex ) {
+        midImageIndex = Math.floor(Math.random() * allImageObjects.length);
+    };
 
     // how can I solve this same image displying twice
     // we are updating the left image
@@ -239,12 +245,24 @@ let clickEventOnImage = function (evt) {
             // this will add the new child element to our html score section
             timesPicked.appendChild(newScore);
 
-            return(newScore);
+            // this only pushes the li into the new array, we want the times clicked
+            // objectClickedArray.push(allImageObjects[index].clicks);
+            // console.log(objectClickedArray);
+
+            // i want after my clicks to display the name of all imgs 
+            objectNamesArray.push(allImageObjects[index].name);
+            console.log(objectNamesArray);
+
+            // return(newScore);
 
             // Sanity Check
             // console.log(newScore);
         };
         
+        // I believe this will push my new score into my empty array for scores on the chart
+        objectNamesArray.push(allImageObjects.name);
+        console.log(objectNamesArray);
+
     };
 
 
