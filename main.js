@@ -46,7 +46,7 @@ let maxClicksAllowed = 12;
 // we are setting these for getting these datas to our chart, we need to fill them
 let objectNamesArray = [];
 // may not be using this
-let objectClickedArray = [];
+let objectClickedArrayLeft = [];
 let objectTimesDisplayed = [];
 
 // We want to randomly pick from a list of  image objects and display them
@@ -126,11 +126,13 @@ let pickedNewItem = function () {
     //so this is checking the right to mid and left, if they match, it loops
     while (rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex) {
         rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
+        console.log(`New Image displayed in ${midImageOnThePage}`);
     };
 
     //so this is checking the mid against both, if it matches either, it loops the image
     while (midImageIndex === leftImageIndex || midImageIndex === rightImageIndex) {
         midImageIndex = Math.floor(Math.random() * allImageObjects.length);
+        console.log(`New Image displayed in ${rightImageOnThePage}`);
     };
 
     // how can I solve this same image displying twice
@@ -258,9 +260,7 @@ let clickEventOnImage = function (evt) {
             // objectNamesArray.push(allImageObjects.name);
             // console.log(objectNamesArray);
 
-            // instead of making lis right now, lets get the names into this new variable, cause as it stands my objectnames array only reads as li
-
-
+            
             // Sanity Check
             // console.log(newScore);
         };
@@ -268,12 +268,20 @@ let clickEventOnImage = function (evt) {
         //let create a for loop for the clicks only
         for (let index = 0; index < allImageObjects.length; index++) {
             // this only pushes the li into the new array, we want the times clicked
-            objectClickedArray.push(allImageObjects[index].clicks);
-            console.log(objectClickedArray);
+            objectClickedArrayLeft.push(leftImageOnThePage.clicks);
+            console.log(objectClickedArrayLeft.clicks);
             // let scoreStored = allImageObjects[index].clicks;
             // console.log(objectClickedArray);
 
         };
+
+        // for (let index = 0; index < .length; index++) {
+        //     // i want after my clicks to display the name of all imgs 
+        //     // objectNamesArray.push(allImageObjects.name);
+        //     // console.log(objectNamesArray);
+        //     cons
+            
+        // }
 
         // I believe this will push my new score into my empty array for scores on the chart
 
@@ -339,4 +347,4 @@ allImagesSection.addEventListener('click', clickEventOnImage);
 
 //=============================== End of Chart Making ============================//
 
-pickedNewItem(); // there are no images loaded to try yet, check with images, make sure to change the css of pic sizes
+pickedNewItem(); 
