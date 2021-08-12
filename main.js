@@ -103,7 +103,7 @@ let imageRightTag = document.getElementById('imageRightTag')
 let timesPicked = document.getElementById('timesPicked');
 
 
-let Chart = document.getElementById('myChart');
+// let Chart = document.getElementById('myChart');
 
 
 
@@ -131,13 +131,13 @@ let pickedNewItem = function () {
     //so this is checking the right to mid and left, if they match, it loops
     while (rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex) {
         rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log("Dupe detected in Mid area, New Image displayed there");
+        console.log("Dupe detected in Mid area, New Image displayed MID there");
     };
 
     //so this is checking the mid against both, if it matches either, it loops the image
     while (midImageIndex === leftImageIndex || midImageIndex === rightImageIndex) {
         midImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log("Dupe detected in Right area, New Image displayed in there");
+        console.log("Dupe detected in Right area, New Image displayed RIGHT in there");
     };
 
     // how can I solve this same image displying twice
@@ -189,13 +189,13 @@ let clickEventOnImage = function (evt) {
 
         // Mark shown times, by iterating it thru the empty variable we set in top, we push these in 
         leftImageOnThePage.timesDisplayed++;
-        console.log(` ${leftImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
+        // console.log(` ${leftImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
 
         midImageOnThePage.timesDisplayed++;
-        console.log(` ${midImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
+        // console.log(` ${midImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
 
         rightImageOnThePage.timesDisplayed++;
-        console.log(` ${rightImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
+        // console.log(` ${rightImageOnThePage.name} has been displayed ${leftImageOnThePage.timesDisplayed} times !`);
 
         // console.log(` Left ${imageLeft} has been shown: ${leftImageOnThePage.timesDisplayed}, Mid ${imageMid} has been shown: ${midImageOnThePage.timesDisplayed}, Right ${imageRight} has been shown: ${rightImageOnThePage.timesDisplayed} `);
 
@@ -216,19 +216,19 @@ let clickEventOnImage = function (evt) {
                 // this is 
                 leftImageOnThePage.clicks++;
 
-                console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} clicks Right Now and has displayed ${leftImageOnThePage.timesDisplayed} ! `);
+                // console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} clicks Right Now and has displayed ${leftImageOnThePage.timesDisplayed} ! `);
             }
 
             if (id === 'imageMidTag') {
                 midImageOnThePage.clicks++;
 
-                console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} clicks Right Now and has displayed ${midImageOnThePage.timesDisplayed} ! `);
+                // console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} clicks Right Now and has displayed ${midImageOnThePage.timesDisplayed} ! `);
             }
 
             if (id === 'imageRightTag') {
                 rightImageOnThePage.clicks++;
 
-                console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} clicks Right Now and has displayed ${rightImageOnThePage.timesDisplayed} ! `);
+                // console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} clicks Right Now and has displayed ${rightImageOnThePage.timesDisplayed} ! `);
             }
 
             // now I want new images generated after a selection is met
@@ -307,17 +307,47 @@ function gatherAndDrawChart() {
 // my data is just being making with li, fix that
 function makeChart() {
 
-    // let allObjectNamesChart = [];
-    // let allObjectClicksChart = [];
-    // let allObjectsTimesDisplayedChart = [];
+    console.log(allObjectNamesChart);
+    console.log(allObjectClicksChart);
+    console.log(allObjectsTimesDisplayedChart);
 
-    allObjectClicksChart.push(25); // to set the upper limit
 
-    // I need to get the names from the array I made
-    // const x_axis = objectNamesArray;
+    // allObjectClicksChart.push(12); // to set the upper limit
+
+    // i am setting my labels to to mane array
+    const labelChart = allObjectNamesChart;
+
+    // const ctx = document.getElementById('imageChart').getContext('2d');
+
+    // const dataChart = {
+
+
+    //     labels: labelChart,
+    //     datasets: [{
+    //         label: 'Times Clicked',
+    //         backgroundColor: 'rgb(255, 99, 132)',
+    //         borderColor: 'rgb(255, 99, 132)',
+    //         data: allObjectClicksChart,
+    //     },],
+    // };
+
+
+    // const configData = {
+
+    //     type: 'bar',
+
+    //     dataChart,
+
+    //     options: {},
+
+    // };
+
+    // let myNewChart = new Chart(document.getElementById("imageChart"),configData);
+    // myNewChart;
 
 
     const ctx = document.getElementById('imageChart').getContext('2d');
+
 
     // Set up the data sets
     const imageChart = new Chart(ctx, {
@@ -326,13 +356,20 @@ function makeChart() {
         type: 'bar',
 
         data: {
-            labels: allObjectNamesChart,
+            labels: labelChart,
             datasets: [{
                 label: 'Times Clicked',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: allObjectClicksChart
+            },
+             {
+                label: 'Times Displayed',
+                backgroundColor: 'rgb(200, 80, 32)',
+                borderColor: 'rgb(25, 209, 222)',
+                data: allObjectsTimesDisplayedChart
             }]
+
 
         },
 
@@ -348,7 +385,7 @@ function makeChart() {
         }
 
     });
-}
+};
 //=============================== End of Chart Making ============================//
 
 // refer to kevin's code about the even listener, rememeber the bubble effect
