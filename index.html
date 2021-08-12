@@ -59,29 +59,29 @@
     <div>
         <aside>
             <ol id="timesPicked"> </ol>
-            <p> The amount of times picked ! </p>
+            <p>  </p>
         </aside>
     </div>
 
-    <div id="buttonArea2">
-        <p>~ To Display OLD RESULTS ~</p>
-        <button id="button2" type="submit" onclick="getLocalStorage()"> Display Past Results </button>
-    </div>
 <br>
-    <div id="buttonArea">
-        <p>~ TO SAVE RESULTS FROM BELOW ~</p>
-        <button id="button" type="submit" onclick="updateLocalStorage()"> Save These Click Results </button>
-    </div>
-
     <div>
         <!-- We may need to set width and height for size purposes -->
         <canvas id="imageChart"></canvas>
     </div>
-
+    <div id="buttonArea">
+        <p>~ SAVE RESULTS ~</p>
+        <button id="button" type="submit" onclick="updateLocalStorage()"> Save These Click Results </button>
+    </div>
+<br>
+    <div id="buttonArea2">
+        <p>~ To Display OLD RESULTS ~</p>
+        <button id="button2" type="submit" onclick="getLocalStorage()"> Display Past Results </button>
+    </div>
     <div>
         <h4> Previous Results </h4>
         <ul id="previousResultsDisplay"></ul>
     </div>
+<br>
 
 
     <!-- Extra Stuff Below -->

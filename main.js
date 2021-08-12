@@ -186,6 +186,7 @@ let pickedNewItem = function () {
 // Click on image need to be handled in some way
 let clickEventOnImage = function (evt) {
     // sanity for what we clicked
+    evt.preventDefault();
     // console.log(`You have clicked this element ${evt.target.id}`);
 
     // let set an if for when they click
@@ -378,15 +379,15 @@ function makeChart() {
 button.addEventListener('click', updateLocalStorage);
 
 function updateLocalStorage() {
-    console.log("Updating localStorage for NAMES....");
-    const namesSaveArray = JSON.stringify(allObjectNamesChart);
-    console.log(`${namesSaveArray}`);
+    // console.log("Updating localStorage for NAMES....");
+    // const namesSaveArray = JSON.stringify(allObjectNamesChart);
+    // console.log(`${namesSaveArray}`);
 
     console.log("Updating localStorage for CLICKS....");
     const clickSaveArray = JSON.stringify(allObjectClicksChart);
     console.log(`${clickSaveArray}`);
     // key, value pairs
-    localStorage.setItem('Names', namesSaveArray);
+    // localStorage.setItem('Names', namesSaveArray);
     localStorage.setItem('Clicks', clickSaveArray);
 };
 
@@ -395,15 +396,17 @@ button2.addEventListener('click', getLocalStorage);
 
 //=========== Now retireve data =============//
 function renderData() {
-    previousResultsDisplay.textContent = '';
+    previousResultsDisplay.innerText = '';
+
     for (let index = 0; index < allObjectClicksChart.length; index++) 
     {
 
-    let resultsLI = createElement('li');
+    let resultsLI = document.createElement('p');
 
-    infoP.textContent = ` ${allObjectNamesChart} was clicked ${allObjectClicksChart} times! `;
+    resultsLI.innerText = ` ${allObjectNamesChart} were clicked ${allObjectClicksChart} times! `;
 
-    resultsLI.appendChild(infoP);
+    // resultsLI.appendChild(resultsLI);
+    previousResultsDisplay.appendChild(resultsLI);
 
     }
 
@@ -425,16 +428,16 @@ function getLocalStorage() {
     const dataClicks = JSON.parse(oldDataClicks);
 
     // If this is the first time we visit the page, there will not be an array for us to use in localStorage
-    if (dateNames !== null) {
+    if (dataNames !== null) {
         allObjectNamesChart = dataNames;
     }
 
-    if (dateClicks !== null) {
+    if (dataClicks !== null) {
         allObjectClicksChart = dataClicks;
     }
 
     // let's render the old data that we retrieved back from the localStorage
-    // renderOrders();
+    renderData();
 
 };
 
