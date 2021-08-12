@@ -9,6 +9,8 @@
 //Let's Define our object first
 // Here is where we define our classes, instantiate classes, add event hndlers to track clicks
 
+// 'use strict';
+
 //Define base set of props for our domin object in a new ES6 class syntax
 // inside curly brces mens it is ecapsulated in the clss
 // GoatPictures will be watever clss we choose here
@@ -24,7 +26,9 @@ class ImageObject {
     constructor(name, imageSrc) {
         this.name = name;
         this.imageSrc = imageSrc;
-
+        // clickSaveResults.push(ImageObject.clicks);
+        // console.log(clickSaveResults);
+        // updateLocalStorage();
     };
 
     // we can add aditionl methods here for what the object will do
@@ -101,8 +105,14 @@ let imageRightTag = document.getElementById('imageRightTag')
 
 //times picked base
 let timesPicked = document.getElementById('timesPicked');
+// For saving
+let button = document.getElementById('button');
+let buttonArea = document.getElementById('buttonArea');
+// For Retrieving
+let button2 = document.getElementById('button2');
+let buttonArea2 = document.getElementById('buttonArea2');
 
-
+let previousResultsDisplay = document.getElementById("previousResultsDisplay");
 // let Chart = document.getElementById('myChart');
 
 
@@ -251,6 +261,9 @@ let clickEventOnImage = function (evt) {
         gatherAndDrawChart();
         makeChart();
 
+        // clickSaveResults.push(ImageObject.clicks);
+        // console.log(clickSaveResults);
+
         // let scoreStored = 
         // function postR
         // Now display the final results
@@ -294,12 +307,7 @@ function gatherAndDrawChart() {
         // console.log(allObjectNamesChart);
         // console.log(allObjectClicksChart);
         // console.log(allObjectsTimesDisplayedChart);
-
     };
-
-
-
-
 }
 
 //=============================== Lab 12 Chart Making ============================//
@@ -317,35 +325,7 @@ function makeChart() {
     // i am setting my labels to to mane array
     const labelChart = allObjectNamesChart;
 
-    // const ctx = document.getElementById('imageChart').getContext('2d');
-
-    // const dataChart = {
-
-
-    //     labels: labelChart,
-    //     datasets: [{
-    //         label: 'Times Clicked',
-    //         backgroundColor: 'rgb(255, 99, 132)',
-    //         borderColor: 'rgb(255, 99, 132)',
-    //         data: allObjectClicksChart,
-    //     },],
-    // };
-
-
-    // const configData = {
-
-    //     type: 'bar',
-
-    //     dataChart,
-
-    //     options: {},
-
-    // };
-
-    // let myNewChart = new Chart(document.getElementById("imageChart"),configData);
-    // myNewChart;
-
-
+    // 
     const ctx = document.getElementById('imageChart').getContext('2d');
 
 
@@ -363,7 +343,7 @@ function makeChart() {
                 borderColor: 'rgb(255, 99, 132)',
                 data: allObjectClicksChart
             },
-             {
+            {
                 label: 'Times Displayed',
                 backgroundColor: 'rgb(200, 80, 32)',
                 borderColor: 'rgb(25, 209, 222)',
@@ -387,6 +367,78 @@ function makeChart() {
     });
 };
 //=============================== End of Chart Making ============================//
+
+//==============================================Lab 13============================================//
+
+//================== lets save data ================//
+// ========== this placement may need to be called and moved?
+// lets set a global array
+
+//========= lets add an event listner ===============//
+button.addEventListener('click', updateLocalStorage);
+
+function updateLocalStorage() {
+    console.log("Updating localStorage for NAMES....");
+    const namesSaveArray = JSON.stringify(allObjectNamesChart);
+    console.log(`${namesSaveArray}`);
+
+    console.log("Updating localStorage for CLICKS....");
+    const clickSaveArray = JSON.stringify(allObjectClicksChart);
+    console.log(`${clickSaveArray}`);
+    // key, value pairs
+    localStorage.setItem('Names', namesSaveArray);
+    localStorage.setItem('Clicks', clickSaveArray);
+};
+
+//========= lets add an event listner ===============//
+button2.addEventListener('click', getLocalStorage);
+
+//=========== Now retireve data =============//
+function renderData() {
+    previousResultsDisplay.textContent = '';
+    for (let index = 0; index < allObjectClicksChart.length; index++) 
+    {
+
+    let resultsLI = createElement('li');
+
+    infoP.textContent = ` ${allObjectNamesChart} was clicked ${allObjectClicksChart} times! `;
+
+    resultsLI.appendChild(infoP);
+
+    }
+
+
+
+};
+
+function getLocalStorage() {
+    //console.log("Get stored data from the local storage!!");
+
+    // retrieve data from local storage
+    const oldDataNames = localStorage.getItem("Names");
+    const oldDataClicks = localStorage.getItem("Clicks");
+
+    //console.log(`oldData -- ${oldData}`);
+
+    // convert the data (array) from a string to something that we can use in JavaScript.
+    const dataNames = JSON.parse(oldDataNames);
+    const dataClicks = JSON.parse(oldDataClicks);
+
+    // If this is the first time we visit the page, there will not be an array for us to use in localStorage
+    if (dateNames !== null) {
+        allObjectNamesChart = dataNames;
+    }
+
+    if (dateClicks !== null) {
+        allObjectClicksChart = dataClicks;
+    }
+
+    // let's render the old data that we retrieved back from the localStorage
+    // renderOrders();
+
+};
+
+//=================End of locale storage==========================//
 
 // refer to kevin's code about the even listener, rememeber the bubble effect
 allImagesSection.addEventListener('click', clickEventOnImage);
