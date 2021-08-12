@@ -46,20 +46,9 @@ let maxClicksAllowed = 12;
 // we are setting these for getting these datas to our chart, we need to fill them
 let allObjectNamesChart = [];
 // let objectNamesArray = [];
-let objectNamesArrayLeft = [];
-let objectNamesArrayMid = [];
-let objectNamesArrayRight = [];
+let allObjectClicksChart = [];
 
-// may not be using these, just making them
-// let objectClickedTotalArray = [];
-let objectClickedArrayLeft = [];
-let objectClickedArrayMid = [];
-let objectClickedArrayRight = [];
-
-// let objectTimesDisplayedChart = [];
-let objectTimesDisplayedLeft = [];
-let objectTimesDisplayedMid = [];
-let objectTimesDisplayedRight = [];
+let allObjectsTimesDisplayedChart = [];
 
 // We want to randomly pick from a list of  image objects and display them
 // we will need an array for our list of imges, we can and display them
@@ -109,8 +98,12 @@ let imageRight = document.getElementById('imageRight');
 let imageRightTag = document.getElementById('imageRightTag')
 //     or
 // const PictureArea1
+
 //times picked base
 let timesPicked = document.getElementById('timesPicked');
+
+
+let Chart = document.getElementById('myChart');
 
 
 
@@ -223,43 +216,21 @@ let clickEventOnImage = function (evt) {
                 // this is 
                 leftImageOnThePage.clicks++;
 
-                // this didnt work
-                // leftImageOnThePage.timesDisplayed++;
-
-                // check to see if this is moving properly
-                // i think we need to add our new arrays fulfillment used at beginning
-                // objectClickedArray.push(leftImageOnThePage);
-
-                //sanity
-                objectNamesArrayLeft.push(leftImageOnThePage.name);
-                // I want my click results pushed in my left clicked array
-                objectClickedArrayLeft.push(leftImageOnThePage.clicks);
-                objectTimesDisplayedLeft.push(leftImageOnThePage.timesDisplayed);
-                console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} clicks Right Now ! `);
+                console.log(` ${leftImageOnThePage.name} has ${leftImageOnThePage.clicks} clicks Right Now and has displayed ${leftImageOnThePage.timesDisplayed} ! `);
             }
 
             if (id === 'imageMidTag') {
                 midImageOnThePage.clicks++;
 
-                objectNamesArrayMid.push(midImageOnThePage.name);
-                // I want my click results pushed in my left clicked array
-                objectClickedArrayMid.push(midImageOnThePage.clicks);
-                objectTimesDisplayedMid.push(midImageOnThePage.timesDisplayed);
-
-                console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} clicks Right Now ! `);
+                console.log(` ${midImageOnThePage.name} has ${midImageOnThePage.clicks} clicks Right Now and has displayed ${midImageOnThePage.timesDisplayed} ! `);
             }
 
             if (id === 'imageRightTag') {
                 rightImageOnThePage.clicks++;
 
-                objectNamesArrayRight.push(leftImageOnThePage.name);
-                // I want my click results pushed in my left clicked array
-                objectClickedArrayRight.push(leftImageOnThePage.clicks);
-                objectTimesDisplayedRight.push(leftImageOnThePage.timesDisplayed);
-
-                console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} clicks Right Now ! `);
+                console.log(` ${rightImageOnThePage.name} has ${rightImageOnThePage.clicks} clicks Right Now and has displayed ${rightImageOnThePage.timesDisplayed} ! `);
             }
-        
+
             // now I want new images generated after a selection is met
             pickedNewItem();
         }
@@ -276,7 +247,9 @@ let clickEventOnImage = function (evt) {
         console.log('You have made 12 decisions, You Are Finished');
         alert('You have made 12 decisions, Thanks for your participation ! You can contiune to the site !');
 
-        // kev recommends a function to iterate thru allimage objects, make 2 new arrays, and load up a name array and 
+        // kev recommends a function to iterate thru allimage objects, make 2 new arrays, and load up a name array 
+        gatherAndDrawChart();
+        makeChart();
 
         // let scoreStored = 
         // function postR
@@ -290,109 +263,94 @@ let clickEventOnImage = function (evt) {
             let newScore = document.createElement('li');
 
             // this is the data going into the chart
-            newScore.innerText = ` ${allImageObjects[index].name}: ${allImageObjects[index].clicks} `;
+            newScore.innerText = ` ${allImageObjects[index].name} : was clicked ${allImageObjects[index].clicks} times and displayed ${allImageObjects[index].timesDisplayed} times !`;
             // this will add the new child element to our html score section
             timesPicked.appendChild(newScore);
-            //========  This is making the li elements in my dom ====== //
-;
+            //========  This is making the li elements in my dom ====== //;
 
-            
+
             // Sanity Check
             // console.log(newScore);
         };
-
-        // console.log(` The ${leftImageOnThePage.name} was displayed ${leftImageOnThePage.timesDisplayed}`);
-
-        //let create a for loop for the clicks only
-        // for (let index = 0; index < allImageObjects.length; index++) {
-        //     // this only pushes the li into the new array, we want the times clicked
-        //     objectClickedArrayLeft.push(leftImageOnThePage.clicks);
-        //     console.log(objectClickedArrayLeft.clicks);
-        //     // let scoreStored = allImageObjects[index].clicks;
-        //     // console.log(objectClickedArray);
-
-        // };
-
-        // for (let index = 0; index < .length; index++) {
-        //     // i want after my clicks to display the name of all imgs 
-        //     // objectNamesArray.push(allImageObjects.name);
-        //     // console.log(objectNamesArray);
-        //     cons
-            
-        // }
-
-        // I believe this will push my new score into my empty array for scores on the chart
-
-        // objectNamesArray.push(allImageObjects.name);
-        console.log(objectNamesArrayLeft);
-        console.log(objectNamesArrayMid);
-        console.log(objectNamesArrayRight);
-
-        console.log(objectClickedArrayLeft);
-        console.log(objectClickedArrayMid);
-        console.log(objectClickedArrayRight);
-
-        console.log(objectTimesDisplayedLeft);
-        console.log(objectTimesDisplayedMid);
-        console.log(objectTimesDisplayedRight);
 
     };
 
 
 };
 
-// Lizzy had used another function get the results and right before her reslts are displayed she did something
-// function () {
+// We set our data resulrts into oue new arrays here for charting, these are at the top
+// let allObjectNamesChart = [];
+// let allObjectClicksChart = [];
+// let allObjectsTimesDisplayedChart = [];
+
+// this function will push our data into our new arrays
+function gatherAndDrawChart() {
+
+    for (let index = 0; index < allImageObjects.length; index++) {
+        allObjectNamesChart.push(allImageObjects[index].name);
+        allObjectClicksChart.push(allImageObjects[index].clicks);
+        allObjectsTimesDisplayedChart.push(allImageObjects[index].timesDisplayed);
+
+        // console.log(allObjectNamesChart);
+        // console.log(allObjectClicksChart);
+        // console.log(allObjectsTimesDisplayedChart);
+
+    };
 
 
-// };
 
-// Lets add event listeneres to the clicks of the items
-// refer to kevin's code about the even listener, rememeber the bubble effect
-allImagesSection.addEventListener('click', clickEventOnImage);
+
+}
 
 //=============================== Lab 12 Chart Making ============================//
 
 // my data is just being making with li, fix that
-// function makeChart()
+function makeChart() {
+
+    // let allObjectNamesChart = [];
+    // let allObjectClicksChart = [];
+    // let allObjectsTimesDisplayedChart = [];
+
+    allObjectClicksChart.push(25); // to set the upper limit
+
+    // I need to get the names from the array I made
+    // const x_axis = objectNamesArray;
 
 
-// I need to get the names from the array I made
-// const x_axis = objectNamesArray;
+    const ctx = document.getElementById('imageChart').getContext('2d');
 
-// // Set up the data sets
-// const data = {
-//     labels: objectNamesArray,
-//     datasets: [{
-//         label: 'Times Picked',
-//         backgroundColor: 'rgb(255, 99, 132)',
-//         borderColor: 'rgb(255, 99, 132)',
-//         data: [timesPicked], // we will be dropping an array here of clicks that we may need to set
-//     }
-// // ,// dont forget the comma 
-// //this is going to be the second bar for times displayed
-// //     {
-// //         label: 'Times Picked',
-// //         backgroundColor: 'rgb(255, 99, 132)',
-// //         borderColor: 'rgb(255, 99, 132)',
-// // data: [timesPicked], // we will be dropping an array here of clicks that we may need to set}
-// ]
+    // Set up the data sets
+    const imageChart = new Chart(ctx, {
 
-// };
+        // type of chart being made
+        type: 'bar',
 
-// // defiine your data with what you are using
-// const config = {
-//     type: 'bar',
-//     data,
-//     options: {}
-// }
+        data: {
+            labels: allObjectNamesChart,
+            datasets: [{
+                label: 'Times Clicked',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: allObjectClicksChart
+            }]
 
-// // call the chart being ma
-// let myChart = new Chart(
-//     document.getElementById('myChart'),
-//     config
-// );
+        },
 
+        // defiine your data with what you are using
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+    });
+}
 //=============================== End of Chart Making ============================//
 
-pickedNewItem(); 
+// refer to kevin's code about the even listener, rememeber the bubble effect
+allImagesSection.addEventListener('click', clickEventOnImage);
+pickedNewItem();
