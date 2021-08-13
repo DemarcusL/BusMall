@@ -135,19 +135,19 @@ let pickedNewItem = function () {
     // So this is checking for if the left img meets the right image or mid img, the left will loop
     while (leftImageIndex === rightImageIndex || leftImageIndex === midImageIndex) {
         leftImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log("Dupe detected in Left area, New Image displayed in LEFT there");
+        console.log("Dupe detected in Left area, New Image displayed LEFT");
     };
 
     //so this is checking the right to mid and left, if they match, it loops
     while (rightImageIndex === leftImageIndex || rightImageIndex === midImageIndex) {
         rightImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log("Dupe detected in Mid area, New Image displayed MID there");
+        console.log("Dupe detected in Mid area, New Image displayed MID");
     };
 
     //so this is checking the mid against both, if it matches either, it loops the image
-    while (midImageIndex === leftImageIndex || midImageIndex === rightImageIndex) {
+    while (midImageIndex === leftImageIndex || midImageIndex === rightImageIndex ) {
         midImageIndex = Math.floor(Math.random() * allImageObjects.length);
-        console.log("Dupe detected in Right area, New Image displayed RIGHT in there");
+        console.log("Dupe detected in Right area, New Image displayed RIGHT");
     };
 
     // how can I solve this same image displying twice
@@ -383,12 +383,14 @@ function updateLocalStorage() {
     // const namesSaveArray = JSON.stringify(allObjectNamesChart);
     // console.log(`${namesSaveArray}`);
 
-    console.log("Updating localStorage for CLICKS....");
+    console.log("Updating localStorage for NAMES and CLICKS....");
     const clickSaveArray = JSON.stringify(allObjectClicksChart);
-    console.log(`${clickSaveArray}`);
+    const namesSaveArray = JSON.stringify(allObjectNamesChart);
+    console.log(` The clicks are saved as: ${clickSaveArray}`);
+    console.log(`The names are saved as: ${namesSaveArray}`);
     // key, value pairs
-    // localStorage.setItem('Names', namesSaveArray);
-    localStorage.setItem('Clicks', clickSaveArray);
+    localStorage.setItem('names', namesSaveArray);
+    localStorage.setItem('clicks', clickSaveArray);
 };
 
 //========= lets add an event listner ===============//
@@ -398,12 +400,12 @@ button2.addEventListener('click', getLocalStorage);
 function renderData() {
     previousResultsDisplay.innerText = '';
 
-    for (let index = 0; index < allObjectClicksChart.length; index++) 
+    for (let index = 0; index <= allObjectClicksChart.length; index++) 
     {
 
-    let resultsLI = document.createElement('p');
+    let resultsLI = document.createElement('li');
 
-    resultsLI.innerText = ` ${allObjectNamesChart} were clicked ${allObjectClicksChart} times! `;
+    resultsLI.innerText = ` Previously , ${allObjectNamesChart} were clicked ${allObjectClicksChart} corresponding times! `;
 
     // resultsLI.appendChild(resultsLI);
     previousResultsDisplay.appendChild(resultsLI);
@@ -418,14 +420,14 @@ function getLocalStorage() {
     //console.log("Get stored data from the local storage!!");
 
     // retrieve data from local storage
-    const oldDataNames = localStorage.getItem("Names");
-    const oldDataClicks = localStorage.getItem("Clicks");
+    const oldNames = localStorage.getItem("names");
+    const oldClicks = localStorage.getItem("clicks");
 
     //console.log(`oldData -- ${oldData}`);
 
     // convert the data (array) from a string to something that we can use in JavaScript.
-    const dataNames = JSON.parse(oldDataNames);
-    const dataClicks = JSON.parse(oldDataClicks);
+    const dataNames = JSON.parse(oldNames);
+    const dataClicks = JSON.parse(oldClicks);
 
     // If this is the first time we visit the page, there will not be an array for us to use in localStorage
     if (dataNames !== null) {
@@ -446,3 +448,9 @@ function getLocalStorage() {
 // refer to kevin's code about the even listener, rememeber the bubble effect
 allImagesSection.addEventListener('click', clickEventOnImage);
 pickedNewItem();
+
+// we may need to set what an item list is as an object, set the props to item, quantity, and maybe some render method
+//on second page we whould implement the getlocalestorage
+//on first we are setting the data
+// one requirement is to remove the item.
+// the html can incorporate links to the home page with items to buy and and cart page 
