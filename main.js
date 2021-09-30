@@ -386,6 +386,7 @@ function updateLocalStorage() {
     console.log("Updating localStorage for NAMES and CLICKS....");
     const clickSaveArray = JSON.stringify(allObjectClicksChart);
     const namesSaveArray = JSON.stringify(allObjectNamesChart);
+    const timesClicked = 
     console.log(` The clicks are saved as: ${clickSaveArray}`);
     console.log(`The names are saved as: ${namesSaveArray}`);
     // key, value pairs
@@ -454,3 +455,4 @@ pickedNewItem();
 //on first we are setting the data
 // one requirement is to remove the item.
 // the html can incorporate links to the home page with items to buy and and cart page 
+// If you went to a specialized weekly meetup: Describe what you worked on. Write about (at least) two people you met, where they work, and what they do there. If you had any interesting conversations or anyone provided you with some significant help, note that as well.
